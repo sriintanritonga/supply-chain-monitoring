@@ -1,34 +1,84 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tambah Shipment</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
+@extends('layouts.app')
 
-<h2>Tambah Shipment</h2>
+@section('content')
 
-<form action="/shipment" method="POST">
-    @csrf
+<div class="container-fluid">
 
-    <input type="text" name="kode_pengiriman" class="form-control mb-2" placeholder="Kode Pengiriman">
+    <div class="card shadow">
 
-    <input type="text" name="negara_asal" class="form-control mb-2" placeholder="Negara Asal">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">📦 Tambah Data Shipment</h4>
+        </div>
 
-    <input type="text" name="negara_tujuan" class="form-control mb-2" placeholder="Negara Tujuan">
+        <div class="card-body">
 
-    <input type="text" name="pelabuhan_asal" class="form-control mb-2" placeholder="Pelabuhan Asal">
+            <form action="{{ route('shipment.store') }}" method="POST">
+                @csrf
 
-    <input type="text" name="pelabuhan_tujuan" class="form-control mb-2" placeholder="Pelabuhan Tujuan">
+                <div class="mb-3">
+                    <label class="form-label">Kode Pengiriman</label>
+                    <input type="text" name="kode_pengiriman" class="form-control" required>
+                </div>
 
-    <input type="date" name="tanggal_berangkat" class="form-control mb-2">
+                <div class="mb-3">
+                    <label class="form-label">Negara Asal</label>
+                    <input type="text" name="negara_asal" class="form-control" required>
+                </div>
 
-    <input type="date" name="estimasi_tiba" class="form-control mb-2">
+                <div class="mb-3">
+                    <label class="form-label">Negara Tujuan</label>
+                    <input type="text" name="negara_tujuan" class="form-control" required>
+                </div>
 
-    <input type="text" name="status" class="form-control mb-2" placeholder="Status">
+                <div class="mb-3">
+                    <label class="form-label">Pelabuhan Asal</label>
+                    <input type="text" name="pelabuhan_asal" class="form-control" required>
+                </div>
 
-    <button class="btn btn-success">Simpan</button>
-</form>
+                <div class="mb-3">
+                    <label class="form-label">Pelabuhan Tujuan</label>
+                    <input type="text" name="pelabuhan_tujuan" class="form-control" required>
+                </div>
 
-</body>
-</html>
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tanggal Berangkat</label>
+                        <input type="date" name="tanggal_berangkat" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Estimasi Tiba</label>
+                        <input type="date" name="estimasi_tiba" class="form-control" required>
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Status Pengiriman</label>
+
+                    <select name="status" class="form-select" required>
+                        <option value="">-- Pilih Status --</option>
+                        <option value="Dalam Perjalanan">🚢 Dalam Perjalanan</option>
+                        <option value="Tiba">✅ Tiba</option>
+                        <option value="Tertunda">⚠ Tertunda</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    💾 Simpan
+                </button>
+
+                <a href="{{ route('shipment.index') }}" class="btn btn-secondary">
+                    ← Kembali
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endsection

@@ -1,56 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Data Shipment</title>
-</head>
+@extends('layouts.app')
 
-<body>
+@section('content')
 
-<h1>Data Shipment</h1>
+<div class="container-fluid">
 
-<table border="1" cellpadding="10">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📦 Data Shipment</h2>
 
-<tr>
-    <th>ID</th>
-    <th>Kode Pengiriman</th>
-    <th>Negara Asal</th>
-    <th>Negara Tujuan</th>
-    <th>Pelabuhan Asal</th>
-    <th>Pelabuhan Tujuan</th>
-    <th>Tanggal Berangkat</th>
-    <th>Estimasi Tiba</th>
-    <th>Status</th>
-</tr>
+        <a href="{{ route('shipment.create') }}" class="btn btn-primary">
+            + Tambah Shipment
+        </a>
+    </div>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-@foreach($shipments as $shipment)
+    <div class="card shadow">
 
-<tr>
+        <div class="card-body">
 
-<td>{{ $shipment->id }}</td>
+            <div class="table-responsive">
 
-<td>{{ $shipment->kode_pengiriman }}</td>
+                <table class="table table-bordered table-striped table-hover align-middle">
 
-<td>{{ $shipment->negara_asal }}</td>
+                    <thead class="table-dark">
 
-<td>{{ $shipment->negara_tujuan }}</td>
+                        <tr>
+                            <th>ID</th>
+                            <th>Kode</th>
+                            <th>Negara Asal</th>
+                            <th>Negara Tujuan</th>
+                            <th>Pelabuhan Asal</th>
+                            <th>Pelabuhan Tujuan</th>
+                            <th>Berangkat</th>
+                            <th>Estimasi</th>
+                            <th>Status</th>
+                        </tr>
 
-<td>{{ $shipment->pelabuhan_asal }}</td>
+                    </thead>
 
-<td>{{ $shipment->pelabuhan_tujuan }}</td>
+                    <tbody>
 
-<td>{{ $shipment->tanggal_berangkat }}</td>
+                        @forelse($shipments as $shipment)
 
-<td>{{ $shipment->estimasi_tiba }}</td>
+                        <tr>
 
-<td>{{ $shipment->status }}</td>
+                            <td>{{ $shipment->id }}</td>
 
-</tr>
+                            <td>{{ $shipment->kode_pengiriman }}</td>
 
-@endforeach
+                            <td>{{ $shipment->negara_asal }}</td>
 
+                            <td>{{ $shipment->negara_tujuan }}</td>
 
-</table>
+                            <td>{{ $shipment->pelabuhan_asal }}</td>
 
-</body>
-</html>
+                            <td>{{ $shipment->pelabuhan_tujuan }}</td>
+
+                            <td>{{ $shipment->tanggal_berangkat }}</td>
+
+                            <td>{{ $shipment->estimasi_tiba }}</td>
+
+                            <td>
+
+                                @if($shipment->status == 'Dalam Perjalanan')
+                                    <span class="badge bg-warning text-dark">
+                                        🚢 Dalam Perjalanan
+                                    </span>
+
+                                @elseif($shipment->status == 'Tiba')
+                                    <span class="badge bg-success">
+                                        ✅ Tiba
+                                    </span>
+
+                                @elseif($shipment->status == 'Tertunda')
+                                    <span class="badge bg-danger">
+                                        ⚠ Tertunda
+                                    </span>
+
+                                @else
+                                    <span class="badge bg-secondary">
+                                        {{ $shipment->status }}
+                                    </span>
+                                @endif
+
+                            </td>
+
+                        </tr>
+
+                        @empty
+
+                        <tr>
+
+                            <td colspan="9" class="text-center">
+                                Belum ada data shipment.
+                            </td>
+
+                        </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endsection
