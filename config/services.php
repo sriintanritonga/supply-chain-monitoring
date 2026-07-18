@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    // ==========================
+    // REST COUNTRIES API
+    // ==========================
+    'restcountries' => [
+        'key' => env('REST_COUNTRIES_API_KEY'),
+    ],
+
 ];
